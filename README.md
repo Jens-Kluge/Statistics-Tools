@@ -1,6 +1,7 @@
 # Statistics-Tools
-Statistics Tools as standalone windows executable
-Provides statistical analysis as windows standalone executable without the "help" of excel
+Statistics Tools as standalone windows executable.
+Provides statistical analysis as windows standalone executable without the "help" of excel.
+
 Currently implemented:
 - import of a csv File
 
