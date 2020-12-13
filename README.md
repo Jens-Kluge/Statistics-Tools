@@ -17,8 +17,8 @@ The project uses the following packages:
 - oxyplot library for the plot
 - mathnet.numeric for invoking the special functions needed to calculate the probability distributions
 
-<h2>Histogram Plot</h2>
+## Histogram Plot
 ![image](https://github.com/Jens-Kluge/Statistics-Tools/blob/master/Capture%20Statistic%20Tools.GIF)
 
-<h2>Data import</h2>
+## Data import
 ![image](https://github.com/Jens-Kluge/Statistics-Tools/blob/master/tempsnip.png)
