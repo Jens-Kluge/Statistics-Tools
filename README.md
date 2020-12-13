@@ -3,6 +3,7 @@ Statistics Tools as standalone windows executable
 Provides statistical analysis as windows standalone executable without the "help" of excel
 Currently implemented:
 - import of a csv File
+
 the column headers can be in the first row or in a separate csv file
 the rows should contain only numerical values, category labels are not yet supported
 - export of data to a new excel workbook
