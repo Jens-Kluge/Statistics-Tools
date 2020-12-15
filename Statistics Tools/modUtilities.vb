@@ -31,7 +31,7 @@ Module modUtilities
     Public Sub ShowForm(ByRef fm As Windows.Forms.Form, formType As Type, Optional modal As Boolean = False)
 
 
-        If fm Is Nothing Then
+        If fm Is Nothing OrElse fm.IsDisposed() Then
             fm = Activator.CreateInstance(formType)
         End If
 

@@ -17,6 +17,11 @@ Namespace My
     ' End Sub
 
     Partial Friend Class MyApplication
-        Dim myData As DataSet
+        Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
+#If Test Then
+            modTest.ReadInTestFile()
+#End If
+
+        End Sub
     End Class
 End Namespace

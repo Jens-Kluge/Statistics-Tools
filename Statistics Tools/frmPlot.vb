@@ -8,6 +8,7 @@ Public Class frmPlot
     Private m_Min As Double = 0
     Private m_Max As Double = 100
     Private m_Bins As Integer
+    Private fmFilter As frmFilter
 
     Private Sub btnPlot_Click(sender As Object, e As EventArgs) Handles btnPlot.Click
 
@@ -17,6 +18,7 @@ Public Class frmPlot
 
     Private Sub frmPlot_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        'Fill the combobox
         Try
             For i = 1 To modGlobals.TblData.Columns.Count
                 cmbCols.Items.Add(modGlobals.TblData.Columns(i - 1).ColumnName)
@@ -83,17 +85,16 @@ Public Class frmPlot
             }
 
 
-            For i = 0 To hist.BucketCount
-                seriesA.Items.Add(New Series.ColumnItem(yvalues(i), i))
+            For i = 1 To hist.BucketCount
+                seriesA.Items.Add(New Series.ColumnItem(yvalues(i - 1), i - 1))
             Next
-
 
             'create a model And add the series to it
             Dim Model As PlotModel = New PlotModel With {
                 .Title = cmbCols.SelectedItem.ToString
             }
 
-
+            'overlay a Weibull distribution
             If (chkWeibull.Checked) Then
 
                 Dim alpha As Double = 3, beta As Double = 2
@@ -110,7 +111,7 @@ Public Class frmPlot
                 For i = 1 To hist.BucketCount
                     value = modPdfs.WeibullPdf(alpha, beta, xvalues(i - 1))
                     value *= scalefactor
-                    lsFit.Points.Add(New OxyPlot.DataPoint(i - 0.5, value))
+                    lsFit.Points.Add(New OxyPlot.DataPoint(i - 1, value))
                 Next
                 Model.Series.Add(lsFit)
 
@@ -148,14 +149,18 @@ Public Class frmPlot
         Dim strSel As String
         Dim min, max As Double
 
-        strSel = String.Format("MAX([{0}])", cmbCols.SelectedItem.ToString)
-        max = modGlobals.TblData.Compute(strSel, "")
-        m_Max = max
-        txtMax.Text = max.ToString()
-        strSel = String.Format("MIN([{0}])", cmbCols.SelectedItem.ToString)
-        min = modGlobals.TblData.Compute(strSel, "")
-        m_Min = min
-        txtMin.Text = min.ToString()
+        Try
+            strSel = String.Format("MAX([{0}])", cmbCols.SelectedItem.ToString)
+            max = modGlobals.TblData.Compute(strSel, "")
+            m_Max = max
+            txtMax.Text = max.ToString()
+            strSel = String.Format("MIN([{0}])", cmbCols.SelectedItem.ToString)
+            min = modGlobals.TblData.Compute(strSel, "")
+            m_Min = min
+            txtMin.Text = min.ToString()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
 
     End Sub
 
@@ -183,7 +188,9 @@ Public Class frmPlot
         End Try
     End Sub
 
-    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
-        MsgBox("Filter not yet implemented")
+    Private Sub chkFilter_CheckedChanged(sender As Object, e As EventArgs) Handles chkFilter.CheckedChanged
+        If chkFilter.Checked Then
+            modUtilities.ShowForm(fmFilter, frmFilter.GetType)
+        End If
     End Sub
 End Class

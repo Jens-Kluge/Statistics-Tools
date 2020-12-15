@@ -34,7 +34,7 @@ Partial Class frmPlot
         Me.txtMax = New System.Windows.Forms.TextBox()
         Me.txtBins = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.chkFilter = New System.Windows.Forms.CheckBox()
         Me.chkWeibull = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
@@ -138,16 +138,16 @@ Partial Class frmPlot
         Me.Label5.TabIndex = 11
         Me.Label5.Text = "Bins"
         '
-        'CheckBox1
+        'chkFilter
         '
-        Me.CheckBox1.Appearance = System.Windows.Forms.Appearance.Button
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Image = CType(resources.GetObject("CheckBox1.Image"), System.Drawing.Image)
-        Me.CheckBox1.Location = New System.Drawing.Point(25, 136)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(54, 54)
-        Me.CheckBox1.TabIndex = 13
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.chkFilter.Appearance = System.Windows.Forms.Appearance.Button
+        Me.chkFilter.AutoSize = True
+        Me.chkFilter.Image = CType(resources.GetObject("chkFilter.Image"), System.Drawing.Image)
+        Me.chkFilter.Location = New System.Drawing.Point(25, 136)
+        Me.chkFilter.Name = "chkFilter"
+        Me.chkFilter.Size = New System.Drawing.Size(54, 54)
+        Me.chkFilter.TabIndex = 13
+        Me.chkFilter.UseVisualStyleBackColor = True
         '
         'chkWeibull
         '
@@ -165,7 +165,7 @@ Partial Class frmPlot
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1178, 608)
         Me.Controls.Add(Me.chkWeibull)
-        Me.Controls.Add(Me.CheckBox1)
+        Me.Controls.Add(Me.chkFilter)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.txtBins)
         Me.Controls.Add(Me.txtMax)
@@ -196,6 +196,6 @@ Partial Class frmPlot
     Friend WithEvents txtMax As TextBox
     Friend WithEvents txtBins As TextBox
     Friend WithEvents Label5 As Label
-    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents chkFilter As CheckBox
     Friend WithEvents chkWeibull As CheckBox
 End Class

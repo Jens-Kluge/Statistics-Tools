@@ -1,5 +1,6 @@
 ﻿Imports System.Globalization
 Imports Microsoft.VisualBasic.FileIO
+Imports System.IO
 Imports System.Data
 Imports System.Data.SqlClient
 Imports Excel = Microsoft.Office.Interop.Excel
@@ -8,7 +9,6 @@ Public Class frmReadData
 
     Private _separator As Char = ","
     Private _datatable As DataTable = Nothing
-    Private _initial_dir As String = "c:\desktop"
     Private _fname As String = ""
     Private _culture As CultureInfo = CultureInfo.CreateSpecificCulture("en-us")
     Private _Datatbl As Object
@@ -29,12 +29,18 @@ Public Class frmReadData
         Dim fName As String = ""
         Dim numLines As Integer
         If Not System.IO.File.Exists(_fname) Then
-            OpenFileDialog1.InitialDirectory = _initial_dir
+            If modGlobals.gImportDir <> "" Then
+                OpenFileDialog1.InitialDirectory = modGlobals.gImportDir
+            Else
+                OpenFileDialog1.InitialDirectory = "c:\desktop"
+            End If
+
             OpenFileDialog1.Filter = "CSV files (*.csv)|*.CSV"
             OpenFileDialog1.FilterIndex = 2
             OpenFileDialog1.RestoreDirectory = True
             If (OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK) Then
                 fName = OpenFileDialog1.FileName
+                modGlobals.gImportDir = path.getdirectoryname(OpenFileDialog1.FileName)
             End If
         Else
             fName = _fname
@@ -140,6 +146,11 @@ Public Class frmReadData
         _fname = ""
         rbDot.Checked = True
         btnHeaders.Enabled = False
+
+        DataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray
+        DataGridView1.RowHeadersDefaultCellStyle.BackColor = Color.LightGray
+        DataGridView1.EnableHeadersVisualStyles = False
+
     End Sub
 
     ''' <summary>
@@ -151,11 +162,11 @@ Public Class frmReadData
 
         Dim fName As String
 
-        OpenFileDialog1.InitialDirectory = _initial_dir
+        OpenFileDialog1.InitialDirectory = modGlobals.gImportDir
         OpenFileDialog1.Filter = "CSV files (*.csv)|*.CSV"
         OpenFileDialog1.FilterIndex = 2
         OpenFileDialog1.RestoreDirectory = True
-        OpenFileDialog1.InitialDirectory = _initial_dir
+        modGlobals.gImportDir = OpenFileDialog1.Filter
 
         If (OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK) Then
             fName = OpenFileDialog1.FileName
@@ -211,10 +222,11 @@ Public Class frmReadData
         Dim headers() As String
         Dim fname As String
 
-        OpenFileDialog1.InitialDirectory = _initial_dir
+        OpenFileDialog1.InitialDirectory = modGlobals.gImportDir
         OpenFileDialog1.Filter = "CSV files (*.csv)|*.CSV"
         OpenFileDialog1.FilterIndex = 2
         OpenFileDialog1.RestoreDirectory = True
+
         If (OpenFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK) Then
             fname = OpenFileDialog1.FileName
         Else
@@ -273,21 +285,22 @@ Public Class frmReadData
 
         Dim fname As String
 
+        'set properties of select file control
         sfdExport.Filter = "Excel files (*.xlsx)|*.xlsx"
         sfdExport.FileName = "Mydata.xlsx"
 
         'ofdExport.FilterIndex = 2
 
-        If sfdExport.InitialDirectory = "" Then
+        If modGlobals.gExportDir = "" Then
             sfdExport.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
         End If
 
         If (sfdExport.ShowDialog() = Windows.Forms.DialogResult.OK) Then
             fname = sfdExport.FileName
+            modGlobals.gExportDir = Path.GetDirectoryName(sfdExport.FileName)
         Else
             Exit Sub
         End If
-
 
         ExportDatasetToExcel(fname)
 
@@ -311,8 +324,11 @@ Public Class frmReadData
         ' Copy the DataTable to an object array
         Dim rawData(dt.Rows.Count, dt.Columns.Count - 1) As Object
         Try
+            Cursor = Cursors.WaitCursor
+            btnExcel.Enabled = False
             ProgressBar1.Maximum = dt.Rows.Count
             ProgressBar1.Value = 0
+
             ' Copy the column names to the first row of the object array
             For col = 0 To dt.Columns.Count - 1
                 rawData(0, col) = dt.Columns(col).ColumnName
@@ -362,6 +378,8 @@ Public Class frmReadData
         Catch ex As Exception
             MsgBox(ex.Message)
         Finally
+            Cursor = Cursors.Default
+            btnExcel.Enabled = True
             excelSheet = Nothing
             excelWorkbook.Close(True, Type.Missing, Type.Missing)
             excelWorkbook = Nothing

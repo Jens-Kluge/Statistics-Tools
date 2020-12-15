@@ -6,7 +6,9 @@
     Private Sub btnReadData_Click(sender As Object, e As EventArgs) Handles btnReadData.Click
         modUtilities.ShowForm(fmReaddata, frmReadData.GetType, True)
         modGlobals.TblData = fmReaddata.TblData
-        btnShowPv.Enabled = True
+        If fmReaddata.TblData IsNot Nothing Then
+            btnShowPv.Enabled = True
+        End If
     End Sub
 
     Private Sub btnShowPv_Click(sender As Object, e As EventArgs) Handles btnShowPv.Click
