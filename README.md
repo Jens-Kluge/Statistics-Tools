@@ -23,5 +23,5 @@ The project uses the following packages:
 ## Box and Whiskers Plot
 ![image](https://github.com/Jens-Kluge/Statistics-Tools/blob/e00bc0c1651f93befaf7b624c1133d63d79743e0/bw%20plot.GIF)
 
-##
+## Data Import
 ![image](https://github.com/Jens-Kluge/Statistics-Tools/blob/70f19681e102522089f5b6d211ef85fb1943a125/data%20import.GIF)
