@@ -20,5 +20,8 @@ The project uses the following packages:
 ## Histogram Plot
 ![image](https://github.com/Jens-Kluge/Statistics-Tools/blob/master/Capture%20Statistic%20Tools.GIF)
 
-## Box and Whiskas plot
+## Box and Whiskers Plot
 ![image](https://github.com/Jens-Kluge/Statistics-Tools/blob/e00bc0c1651f93befaf7b624c1133d63d79743e0/bw%20plot.GIF)
+
+##
+![image](https://github.com/Jens-Kluge/Statistics-Tools/blob/70f19681e102522089f5b6d211ef85fb1943a125/data%20import.GIF)
