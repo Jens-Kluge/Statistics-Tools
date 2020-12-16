@@ -138,13 +138,16 @@
                 chkListbox.Top = 0
                 oFrm = Me.FindForm
                 If oFrm IsNot Nothing Then
-                    oPt = Me.ParentForm.PointToClient(Me.PointToScreen(Point.Empty))
-                    oPt.Y = oPt.Y + Me.txt.Height
-                    oRect = oFrm.RectangleToScreen(oFrm.ClientRectangle)
-                    oPt.X = oPt.X + oRect.Left
-                    oPt.Y = oPt.Y + oRect.Top
-                    Frm.Location = oPt
-                End If
+                oPt = Me.ParentForm.PointToClient(Me.PointToScreen(Point.Empty))
+
+                oPt.Y += Me.txt.Height
+                oRect = oFrm.RectangleToScreen(oFrm.ClientRectangle)
+                oPt.X = oPt.X + oRect.Left
+
+                oPt.Y = oPt.Y + oRect.Top
+                Frm.Location = oPt
+
+            End If
                 Frm.Width = chkListbox.Width
             End If
         End Sub

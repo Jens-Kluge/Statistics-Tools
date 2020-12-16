@@ -21,6 +21,7 @@ Public Class FrmFilter
 
         For i = 1 To modGlobals.TblData.Columns.Count
             strSelField = modGlobals.TblData.Columns(i - 1).ToString
+            'return unique values, due to first function argument
             tbl = modGlobals.TblData.DefaultView.ToTable(True, strSelField)
             Dim lst(tbl.Rows.Count) As String
 

@@ -2,13 +2,13 @@
 Imports MathNet.Numerics.Statistics
 Imports OxyPlot
 
-Public Class frmPlot
+Public Class frmHistPlot
     Private m_XUnits As Integer = 5
     Private m_SelCol As Integer = 0
     Private m_Min As Double = 0
     Private m_Max As Double = 100
     Private m_Bins As Integer
-    Private fmFilter As frmFilter
+    Private fmFilter As FrmFilter
 
     Private Sub btnPlot_Click(sender As Object, e As EventArgs) Handles btnPlot.Click
 
@@ -190,7 +190,9 @@ Public Class frmPlot
 
     Private Sub chkFilter_CheckedChanged(sender As Object, e As EventArgs) Handles chkFilter.CheckedChanged
         If chkFilter.Checked Then
-            modUtilities.ShowForm(fmFilter, frmFilter.GetType)
+            modUtilities.ShowForm(fmFilter, FrmFilter.GetType)
         End If
     End Sub
+
+
 End Class
